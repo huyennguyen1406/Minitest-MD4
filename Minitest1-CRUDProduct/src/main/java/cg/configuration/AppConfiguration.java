@@ -1,4 +1,4 @@
-package configuration;
+package cg.configuration;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,12 +21,9 @@ import java.io.IOException;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("controller")
+@ComponentScan("cg")
 @PropertySource("classpath:upload_file.properties")
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
-    @Value("${file-upload}")
-    private String fileUpload;
-
     private ApplicationContext applicationContext;
 
 
@@ -64,6 +61,9 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     }
 
     //Cấu hình upload file
+
+    @Value("${file-upload}")
+    private String fileUpload;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

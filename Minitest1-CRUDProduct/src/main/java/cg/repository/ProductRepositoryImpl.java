@@ -1,7 +1,7 @@
-package repository.impl;
+package cg.repository;
 
 
-import model.Product;
+import cg.model.Product;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +9,6 @@ import org.hibernate.Transaction;
 
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Repository;
-import repository.IProductRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -39,25 +38,17 @@ public class ProductRepositoryImpl implements IProductRepository {
     }
 
     @Override
-    public Product findProductById(int id) {
-        // SELECT * FROM product WHERE id = ?
-        String queryStr = "SELECT p FROM Product AS p WHERE p.id = :id";
-        TypedQuery<Product> query = entityManager.createQuery(queryStr, Product.class);
-        query.setParameter("id", id);
-        return query.getSingleResult();
-    }
-
-    @Override
-    public Product saveProduct(Product product) {
+    public Product save(Product product) {
         Transaction transaction = null;
         Product origin;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             if (product.getId() != 0) {
-                origin = findProductById(product.getId());
+                origin = findById(product.getId());
                 origin.setName(product.getName());
                 origin.setPrice(product.getPrice());
                 origin.setDescription(product.getDescription());
+                origin.setImage(product.getImage());
             } else {
                 origin = product;
             }
@@ -74,22 +65,36 @@ public class ProductRepositoryImpl implements IProductRepository {
     }
 
     @Override
-    public Product deleteProduct(int id) {
+    public void delete(int id) {
         Transaction transaction = null;
-        Product origin = findProductById(id);
+        Product origin = findById(id);
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             if (origin != null) {
                 session.delete(origin);
             }
             transaction.commit();
-            return origin;
         } catch (Exception e) {
             e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
         }
-        return null;
+    }
+
+    @Override
+    public Product findById(int id) {
+        String queryStr = "SELECT p FROM Product AS p WHERE p.id = :id";
+        TypedQuery<Product> query = entityManager.createQuery(queryStr, Product.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public ArrayList<Product> findAllByName(String name) {
+        String queryStr = "SELECT p FROM Product AS p WHERE p.name LIKE :name";
+        TypedQuery<Product> query = entityManager.createQuery(queryStr, Product.class);
+        query.setParameter("name", "%" + name + "%");
+        return (ArrayList<Product>) query.getResultList();
     }
 }

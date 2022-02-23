@@ -1,35 +1,24 @@
-package model;
+package cg.model;
 
-import org.hibernate.annotations.Table;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-//@Entity
+@Entity
+@Table(name = "product")
 public class Product {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private double price;
     private String description;
-    private MultipartFile image;
+    private String image;
+
+    @Transient
+    private MultipartFile file;
 
     public Product() {
-    }
-
-    public Product(int id, String name, double price, String description, MultipartFile image) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.image = image;
-    }
-
-    public Product(int id, String name, double price, String description, String fileName) {
     }
 
     public int getId() {
@@ -64,11 +53,19 @@ public class Product {
         this.description = description;
     }
 
-    public MultipartFile getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(MultipartFile image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 }

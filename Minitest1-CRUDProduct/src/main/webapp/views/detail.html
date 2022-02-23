@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -27,7 +28,7 @@
     <td th:text="${product.getName()}"></td>
     <td th:text="${product.getPrice()}"></td>
     <td th:text="${product.getDescription()}"></td>
-    <td th:file="${product.getImage()}"></td>
+    <td><img th:src="@{${product.getImage()}}" alt="Lỗi"></td>
   </tr>
   </tbody>
 </table>
