@@ -1,17 +1,21 @@
 package repository.impl;
 
-import com.mysql.cj.Session;
-import com.mysql.cj.xdevapi.SessionFactory;
+
 import model.Product;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.context.annotation.Configuration;
+
+import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 import repository.IProductRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 
+@Repository
 public class ProductRepositoryImpl implements IProductRepository {
 
     private static SessionFactory sessionFactory;

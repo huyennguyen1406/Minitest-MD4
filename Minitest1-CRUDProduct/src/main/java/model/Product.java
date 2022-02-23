@@ -1,24 +1,35 @@
 package model;
 
 import org.hibernate.annotations.Table;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
-@Table(name = "product")
+//@Entity
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private double price;
     private String description;
-    private String image;
+    private MultipartFile image;
 
     public Product() {
+    }
+
+    public Product(int id, String name, double price, String description, MultipartFile image) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.image = image;
+    }
+
+    public Product(int id, String name, double price, String description, String fileName) {
     }
 
     public int getId() {
@@ -53,11 +64,11 @@ public class Product {
         this.description = description;
     }
 
-    public String getImage() {
+    public MultipartFile getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(MultipartFile image) {
         this.image = image;
     }
 }

@@ -1,24 +1,51 @@
 package controller;
 
 import model.Product;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import service.IProductService;
+import service.impl.ProductServiceImpl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
-    @Autowired
-    private IProductService productService;
+    private final IProductService productService = new ProductServiceImpl();
 
     @Value("F:\\CODE\\CODEMD4\\Minitest-MD4\\Minitest1-CRUDProduct\\src\\main\\webapp\\image")
     private String fileUpload;
+
+    @GetMapping("/create")
+    public ModelAndView showCreateForm() {
+        ModelAndView modelAndView = new ModelAndView("/create");
+        modelAndView.addObject("productForm", new Product());
+        return modelAndView;
+    }
+
+    @PostMapping("/save")
+    public ModelAndView saveProduct(@ModelAttribute Product product) {
+        MultipartFile multipartFile = product.getImage();
+        String fileName = multipartFile.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(product.getImage().getBytes(), new File(fileUpload + fileName));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        Product product1 = new Product(product.getId(), product.getName(), product.getPrice(), product.getDescription(), fileName);
+        productService.saveProduct(product);
+        ModelAndView modelAndView = new ModelAndView("/create");
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("message", "Created new product successfully !");
+        return modelAndView;
+    }
 
     @GetMapping
     public ModelAndView showProducts() {
