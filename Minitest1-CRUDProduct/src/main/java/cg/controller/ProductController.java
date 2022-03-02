@@ -17,7 +17,7 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("/product")
 public class ProductController {
-    @Value("${file-upload}")
+    @Value("F:\\CODE\\CODEMD4\\Minitest-MD4\\Minitest1-CRUDProduct\\src\\main\\webapp\\image\\")
     private String fileUpload;
 
     @Value("${view}")

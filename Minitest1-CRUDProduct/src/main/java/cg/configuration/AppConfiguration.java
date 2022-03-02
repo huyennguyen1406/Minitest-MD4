@@ -22,7 +22,7 @@ import java.io.IOException;
 @Configuration
 @EnableWebMvc
 @ComponentScan("cg")
-@PropertySource("classpath:upload_file.properties")
+@PropertySource("classpath:application.properties")
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -47,7 +47,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
-
 
     @Bean
     public SpringResourceTemplateResolver templateResolver() {

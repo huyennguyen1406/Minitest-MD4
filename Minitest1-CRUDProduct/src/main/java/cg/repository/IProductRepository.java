@@ -4,7 +4,6 @@ import cg.model.Product;
 
 import java.util.ArrayList;
 
-
 public interface IProductRepository {
     ArrayList<Product> findAll();
 
