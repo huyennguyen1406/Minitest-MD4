@@ -38,7 +38,7 @@ import java.util.Properties;
 @EnableJpaRepositories("cg.repository")
 @EnableTransactionManagement
 @EnableSpringDataWebSupport
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath::upload_file.properties")
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -101,7 +101,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/city_country?useSSL=false");
         dataSource.setUsername("root");
-        dataSource.setPassword("123456");
+        dataSource.setPassword("12345678");
         return dataSource;
     }
 
