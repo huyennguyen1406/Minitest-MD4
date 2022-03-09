@@ -239,4 +239,22 @@ function displayCategory(category) {
     return `<option id="${category.id}" value="${category.id}">${category.name}</option>`;
 }
 
+function getListCategory() {
+    $.ajax({
+        type: "GET",
+        url: `http://localhost:8080/categories`,
+
+        success: function (categories) {
+            let content = '<tr>\n' +
+                '<th> Category Name</th>\n' +
+                '<th>Action</th></tr>'
+            for (let i = 0; i < categories.length; i++) {
+                content += getDetailCategory1(categories[i]);
+            }
+            document.getElementById("tableCategory").innerHTML = content; // tại sao ở đây chỉ nhận dấu ngoặc đơn nhỉ ???
+        }
+    })
+}
+
 getProduct()
+getListCategory()
