@@ -58,7 +58,7 @@ public class ProductWebserviceController {
         return new ResponseEntity<>(product.get(), HttpStatus.OK);
     }
 
-    //tạo mới 1 đội tượng
+    //tạo mới 1 đối tượng
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product productCreate = iProductService.save(product);
